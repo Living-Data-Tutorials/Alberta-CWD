@@ -3,7 +3,7 @@ library(deSolve)
 library(tidyverse)
 
 #load in the data
-data <-read.csv("C:/Users/Bryn/Documents/UBC/LDP/wasting_disease.csv")
+data <-read.csv("Data/wasting_disease.csv")
 data <- data%>%arrange(Year)
 
 #this is our funtion that represents the differential equations.

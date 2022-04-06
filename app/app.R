@@ -10,8 +10,7 @@
 library(shiny)
 library(tidyverse)
 source("R/prediction.R")
-data <- read.csv("data/wasting_disease.csv")
-getwd()
+data <- read.csv("Data/wasting_disease.csv")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -43,24 +42,24 @@ ui <- fluidPage(
                tabPanel("Page2",
                         sidebarLayout(
                             sidebarPanel(
-                                sliderInput("c","Proportion vaccinated",0,1,0,step=0.01)
+                                sliderInput("prop_vacc","Proportion vaccinated",0,1,0,step=0.01),
+                                p("the slider above controls beta, which is the transmission parameter")
                             ),
                             mainPanel(
                                 plotOutput("i_plot")
                             )
                         ))
-    ),
-    
-    
+    )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     output$i_plot <-renderPlot({
         predictionYears<-2019:2050
-        predictionPrevalence<-predict_i(predictionYears,parms=c(beta=1.398834*(1-input$c),
+        predictionPrevalence<-predict_i(predictionYears,parms=c(beta=1.398834*(1-input$prop_vacc),
                                                                 gamma=1),
                                         xinit = c(S=1-max(data$Prevalence),I=max(data$Prevalence)))
+        
         predictionData<-data.frame(Year=predictionYears,Prevalence=predictionPrevalence)
         
         ggplot(predictionData,aes(x=Year,y=Prevalence))+geom_line(color="blue")+
@@ -68,7 +67,7 @@ server <- function(input, output) {
         
         
     })
-
+    
 }
 
 # Run the application 
