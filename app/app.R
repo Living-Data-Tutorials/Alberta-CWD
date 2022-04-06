@@ -21,7 +21,7 @@ ui <- fluidPage(
                         #Two columns
                         fluidRow(
                             column(width=8,
-                                   h1("h1 heading"),
+                                   h1("h1 heading hello"),
                                    h3("h3 heading"),
                                    p("This is a paragraph"),
                                    #this is a horizontal line break
