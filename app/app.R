@@ -18,22 +18,23 @@ source("R/base_graph.R")
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     navbarPage("",id="mainpage",
-               tabPanel("Page 1",value="page1",
+               tabPanel("Intro",value="page1",
                         # Application title
                         titlePanel("Modeling the spread of Chronic Wasting Disease in mule deer"),
+                        br(),
                         p("In this tutorial, we're going to use a simple compartmental model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how vaccination could be used to drive CWD to extinction in our mule deer population."),
                         #Two columns
                         fluidRow(
                             column(width=12,
                                    withMathJax(),
-                                   h1("What is CWD?"),
+                                   h3("What is CWD?"),
                                    p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors (Fig. 1)."),
                                    tags$img(src="CWDMuleDeer.jpg",width="300px"),
                                    p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer (Fig. 2); if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
                                    tags$img(src="CWDPrevalence1.jpeg",width="300px"),
                                    #this is a horizontal line break
                                    hr(),
-                                   h1("How can we model the spread of CWD?"),
+                                   h3("How can we model the spread of CWD?"),
                                    helpText("We will use a basic compartmental model, known as an SI model (Fig 3). Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
                                    tags$img(src="BasicModel.jpg",width="300px"),
                                    helpText("If we assume that the probability of interacting with infected individuals depends on their frequency in a population, \\(\\frac{I}{N}\\), then the average number of new infections in a single time period is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The average change in susceptible individuals in a single time period is therefore
@@ -41,17 +42,22 @@ ui <- fluidPage(
 Note that this term is negative because the susceptible individuals are lost to the infected class. Similarly, since all newly infected individuals go directly to the infected class, the average change in infected individuals in a single time period is
 $$ \\frac{dI}{dt} = S \\cdot \\beta \\cdot \\frac{I}{N}$$
 Based on these equations, we expect that a larger transmission rate (\\(\\beta\\)) will mean a faster spread of CWD as more susceptible individuals become infected, compared to a smaller transmission rate. Let’s check it out on the next page!
-")
+"),
+                                   br(),
+                                   br(),
+                                   br()
             
                             )
                         )
                ),
                tabPanel("Transmission",
-                        titlePanel("The beta parameter for the model"),
-                        p("Here is a description of what we're doing here, which is letting students examine what the beta parameter does!"),
+                        withMathJax(),
+                        titlePanel("The \\(\\beta\\) parameter for the model"),
+                        tags$div(
+                            HTML(paste("Try exploring how different values of \\(\\beta\\) change the spread of the disease over time! The ", tags$strong("dots"), " are our real data, and the " , tags$span(style="color:red", "red line "), "is our model prediction.", sep = ""))
+                        ),
                         sidebarLayout(
                             sidebarPanel(
-                                withMathJax(),
                                 sliderInput("beta_parameter","\\(\\beta\\)",0,3,0,step=0.001),
                                 helpText("The slider above controls \\(\\beta\\), which is the transmission parameter")
                             ),
@@ -62,12 +68,12 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         hr(),
                         p("Maybe here is more descriptions?")),
                tabPanel("Death",
-                        titlePanel("The gamma parameter"),
+                        withMathJax(),
+                        titlePanel("The \\(\\gamma\\) parameter"),
                         tags$img(src="ModelWithDeath.jpg",width="300px"),
                         helpText("Now we're going to look at what happens when infected individuals have a higher or lower death rate than the susceptible individuals. This death rate is measured by \\(\\gamma\\), where a higher \\(\\gamma\\) means a higher death rate for infected compared to susceptible individuals."),
                         sidebarLayout(
                             sidebarPanel(
-                                withMathJax(),
                                 sliderInput("gamma_beta_parameter","\\(\\beta\\)",min=0,max=2,step=0.001,value=0),
                                 helpText("The slider above controls \\(\\beta\\), which is the transmission parameter"),
                                 hr(),
@@ -84,18 +90,20 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         ),
                         p("Maybe here is more descriptions?")),
                tabPanel("Vaccination",
-                        titlePanel("The vaccination parameter"),
-                        p("Here is a description of what we're doing here, which is letting students examine what vaccination does"),
+                        titlePanel("The vaccination parameter, \\(v\\)"),
+                        tags$img(src="ModelWithVax.jpg",width="300px"),
+                        withMathJax(),
+                        helpText("Is there a benefit to developing a vaccine to fight CWD in mule deer? Even though one doesn't exist yet, we'll look at how a vaccine might be able to help control the infected population. Assume that we can afford to vaccinate only a proportion, \\(v\\) of the population, how large does \\(v\\) need to be?"),
                         sidebarLayout(
                             sidebarPanel(
-                                sliderInput("c_beta_parameter","Beta parameter",min=0,max=2,step=0.001,value=0),
-                                p("the slider above controls beta, which is the transmission parameter"),
+                                sliderInput("c_beta_parameter","\\(\\beta\\)",min=0,max=2,step=0.001,value=0),
+                                p("the slider above controls \\(\\beta\\), which is the transmission parameter"),
                                 hr(),
-                                sliderInput("c_gamma_parameter","Gamma parameter",min=0,max=3,step=0.001,value=0),
-                                p("the slider above controls gamma, which is the death parameter"),
+                                sliderInput("c_gamma_parameter","\\(\\gamma\\)",min=0,max=3,step=0.001,value=0),
+                                p("the slider above controls \\(\\gamma\\), which is the death parameter"),
                                 hr(),
-                                sliderInput("c_c_parameter","Proportion vaccinated",min=0,max=1,step=0.001,value=0),
-                                p("the slider above controls c, which is the vaccination parameter"),
+                                sliderInput("c_c_parameter","\\(v\\)",min=0,max=1,step=0.001,value=0),
+                                p("the slider above controls \\(v\\), which is the vaccination parameter"),
                                 hr(),
                                 span(textOutput("R0"),style="font-size:large")
                             ),
