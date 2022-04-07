@@ -51,8 +51,9 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         p("Here is a description of what we're doing here, which is letting students examine what the beta parameter does!"),
                         sidebarLayout(
                             sidebarPanel(
-                                sliderInput("beta_parameter","Beta parameter",0,3,0,step=0.001),
-                                p("the slider above controls beta, which is the transmission parameter")
+                                withMathJax(),
+                                sliderInput("beta_parameter","\\(\\beta\\)",0,3,0,step=0.001),
+                                helpText("The slider above controls \\(\\beta\\), which is the transmission parameter")
                             ),
                             mainPanel(
                                 plotOutput("beta_plot")
@@ -62,14 +63,16 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         p("Maybe here is more descriptions?")),
                tabPanel("Death",
                         titlePanel("The gamma parameter"),
-                        p("Here is a description of what we're doing here, which is letting students examine what the gamma parameter does!"),
+                        tags$img(src="ModelWithDeath.jpg",width="300px"),
+                        helpText("Now we're going to look at what happens when infected individuals have a higher or lower death rate than the susceptible individuals. This death rate is measured by \\(\\gamma\\), where a higher \\(\\gamma\\) means a higher death rate for infected compared to susceptible individuals."),
                         sidebarLayout(
                             sidebarPanel(
-                                sliderInput("gamma_beta_parameter","Beta parameter",min=0,max=2,step=0.001,value=0),
-                                p("the slider above controls beta, which is the transmission parameter"),
+                                withMathJax(),
+                                sliderInput("gamma_beta_parameter","\\(\\beta\\)",min=0,max=2,step=0.001,value=0),
+                                helpText("The slider above controls \\(\\beta\\), which is the transmission parameter"),
                                 hr(),
-                                sliderInput("gamma_gamma_parameter","Gamma parameter",min=0,max=3,step=0.001,value=0),
-                                p("the slider above controls gamma, which is the death parameter")
+                                sliderInput("gamma_gamma_parameter","\\(\\gamma\\)",min=0,max=3,step=0.001,value=0),
+                                helpText("the slider above controls \\(\\gamma\\), which is the death parameter"),
                             ),
                             mainPanel(
                                 h2("Infected"),
