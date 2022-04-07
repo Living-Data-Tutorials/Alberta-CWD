@@ -52,6 +52,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                ),
                tabPanel("Transmission",
                         withMathJax(),
+                        br(),
                         titlePanel("The \\(\\beta\\) parameter for the model"),
                         tags$div(
                             HTML(paste("Try exploring how different values of \\(\\beta\\) change the spread of the disease over time! The ", tags$strong("dots"), " are our real data, and the " , tags$span(style="color:red", "red line "), "is our model prediction.", sep = ""))
@@ -69,6 +70,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         p("Maybe here is more descriptions?")),
                tabPanel("Death",
                         withMathJax(),
+                        br(),
                         titlePanel("The \\(\\gamma\\) parameter"),
                         tags$img(src="ModelWithDeath.jpg",width="300px"),
                         helpText("Now we're going to look at what happens when infected individuals have a higher or lower death rate than the susceptible individuals. This death rate is measured by \\(\\gamma\\), where a higher \\(\\gamma\\) means a higher death rate for infected compared to susceptible individuals."),
