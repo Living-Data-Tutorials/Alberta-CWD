@@ -47,7 +47,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         )
                ),
                tabPanel("Transmission",
-                        titlePanel("The beta parameter"),
+                        titlePanel("The beta parameter for the model"),
                         p("Here is a description of what we're doing here, which is letting students examine what the beta parameter does!"),
                         sidebarLayout(
                             sidebarPanel(
