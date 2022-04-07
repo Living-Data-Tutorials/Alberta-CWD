@@ -9,8 +9,11 @@
 
 library(shiny)
 library(tidyverse)
-source("R/prediction.R")
 data <- read.csv("Data/wasting_disease.csv")
+ 
+source("R/prediction.R")
+source("R/base_graph.R")
+
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -32,45 +35,81 @@ ui <- fluidPage(
                                    hr(),
                                    h1("How can we model the spread of CWD?"),
                                    helpText("We will use a basic compartmental model, known as an SI model (Fig 3). Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
-                                   tags$img(src="BasicModel.jpg",width="300px"),
-                                   p(tags$ul(
-                                       tags$li("This is the first element in a list"),
-                                       tags$li("This is the second element in a list")
-                                   ))
-                            ),
-                            column(width=4,
-                                   #this is how you include an image
-                                   tags$img(src="test.jpg",width="300px"),
+                                   tags$img(src="BasicModel.jpg",width="300px")
                             )
                         )
                ),
-               tabPanel("Page2",
+               tabPanel("Transmission",
+                        titlePanel("The beta parameter"),
+                        p("Here is a description of what we're doing here, which is letting students examine what the beta parameter does!"),
                         sidebarLayout(
                             sidebarPanel(
-                                sliderInput("prop_vacc","Proportion vaccinated",0,1,0,step=0.01),
+                                sliderInput("beta_parameter","Beta parameter",0,3,0,step=0.001),
                                 p("the slider above controls beta, which is the transmission parameter")
                             ),
                             mainPanel(
-                                plotOutput("i_plot")
+                                plotOutput("beta_plot")
                             )
-                        ))
+                        ),
+                        hr(),
+                        p("Maybe here is more descriptions?")),
+               tabPanel("Death",
+                        titlePanel("The gamma parameter"),
+                        p("Here is a description of what we're doing here, which is letting students examine what the gamma parameter does!"),
+                        sidebarLayout(
+                            sidebarPanel(
+                                sliderInput("gamma_beta_parameter","Beta parameter",min=0,max=2,step=0.001,value=0),
+                                p("the slider above controls beta, which is the transmission parameter"),
+                                hr(),
+                                sliderInput("gamma_gamma_parameter","Gamma parameter",min=0,max=3,step=0.001,value=0),
+                                p("the slider above controls gamma, which is the death parameter")
+                            ),
+                            mainPanel(
+                                h2("Infected"),
+                                plotOutput("gamma_plot_i"),
+                                hr(),
+                                h2("Susceptible"),
+                                plotOutput("gamma_plot_s")
+                            )
+                        ),
+                        p("Maybe here is more descriptions?"))
     )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    output$i_plot <-renderPlot({
-        predictionYears<-2019:2050
-        predictionPrevalence<-predict_i(predictionYears,parms=c(beta=1.398834*(1-input$prop_vacc),
-                                                                gamma=1),
-                                        xinit = c(S=1-max(data$Prevalence),I=max(data$Prevalence)))
-        
-        predictionData<-data.frame(Year=predictionYears,Prevalence=predictionPrevalence)
-        
-        ggplot(predictionData,aes(x=Year,y=Prevalence))+geom_line(color="blue")+
-            geom_line(data=data,aes(x=Year,y=Prevalence))+theme_bw()
-        
-        
+    output$beta_plot <-renderPlot({
+        xinit=c(S=1-0.0022,I=0.0022)
+        predict_years=seq(2006,2050,by=0.25)
+        predict_prevalence <- predict_i(predict_years,c(beta=input$beta_parameter,gamma=0),xinit)
+        predict_df <- data.frame(Year=predict_years,Prevalence=predict_prevalence)
+        base_graph(data)+geom_line(data=predict_df,aes(x=Year,y=Prevalence),size=1,color="red")+ylim(0,1)
+    })
+    output$gamma_plot_i <-renderPlot({
+        xinit=c(S=1-0.0022,I=0.0022)
+        predict_years=seq(2006,2050,by=0.25)
+        predict_prevalence_i <- predict_i(predict_years,c(beta=input$gamma_beta_parameter,
+                                                        gamma=input$gamma_gamma_parameter),xinit)
+        predict_prevalence_s <- predict_s(predict_years,c(beta=input$gamma_beta_parameter,
+                                                          gamma=input$gamma_gamma_parameter),xinit)
+        predict_prevalence_i <- predict_prevalence_i/(predict_prevalence_i+predict_prevalence_s)
+        predict_prevalence_s <- predict_prevalence_s/(predict_prevalence_i+predict_prevalence_s)
+        predict_df <- data.frame(Year=predict_years,Prevalence=predict_prevalence_i)
+
+        base_data <- data %>% arrange(Year)
+        print(base_data$Year)
+        base_data$Prevalence <- base_data$Prevalence/((predict_prevalence_i+predict_prevalence_s)[(1:14)*4])
+        print(base_data$Prevalence)
+        predict_df <- data.frame(Year=predict_years,Prevalence=predict_prevalence_i)
+        base_graph(base_data)+geom_line(data=predict_df,aes(x=Year,y=Prevalence),size=1,color="red")+ylim(0,1)
+    })
+    output$gamma_plot_s <-renderPlot({
+        xinit=c(S=1-0.0022,I=0.0022)
+        predict_years=seq(2006,2050,by=0.25)
+        predict_prevalence <- predict_s(predict_years,c(beta=input$gamma_beta_parameter,
+                                                        gamma=input$gamma_gamma_parameter),xinit)
+        predict_df <- data.frame(Year=predict_years,Prevalence=predict_prevalence)
+        base_graph(data)+geom_line(data=predict_df,aes(x=Year,y=Prevalence),size=1,color="red")+ylim(0,1)
     })
     
 }

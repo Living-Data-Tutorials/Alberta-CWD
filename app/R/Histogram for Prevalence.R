@@ -1,4 +1,4 @@
-cwd<-read.csv("app/Data/wasting_disease.csv")
+cwd<-read.csv("Data/wasting_disease.csv")
 library(ggplot2)
 
 #I lied with the title, I'm making a barplot because it's by year

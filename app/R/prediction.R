@@ -17,9 +17,10 @@ data <- data%>%arrange(Year)
 #This is just an exponential model, but we'll start with this!
 simodel=function(t,x,parms){
   beta=parms["beta"]
+  gamma=parms["gamma"]
   r=rep(0,2)
   r[1]=-beta*x["S"]*x["I"]/(x["S"]+x["I"])
-  r[2]=beta*x["S"]*x["I"]/(x["S"]+x["I"])-0.5*x["I"]
+  r[2]=beta*x["S"]*x["I"]/(x["S"]+x["I"])-gamma*x["I"]
   
   return(list(r))
 }
