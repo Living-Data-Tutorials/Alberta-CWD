@@ -22,6 +22,7 @@ ui <- fluidPage(
                         #Two columns
                         fluidRow(
                             column(width=12,
+                                   withMathJax(),
                                    h1("What is CWD?"),
                                    p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors (Fig. 1)."),
                                    tags$img(src="CWDMuleDeer.jpg",width="300px"),
@@ -29,8 +30,10 @@ ui <- fluidPage(
                                    tags$img(src="CWDPrevalence.jpg",width="300px"),
                                    #this is a horizontal line break
                                    hr(),
-                                   
-                                   p(tags$strong("This is bolded test")),
+                                   h1("How can we model the spread of CWD?"),
+                                   p("We will use a basic compartmental model, known as an SI model (Fig 3)."),
+                                   tags$img(src="BasicModel.jpg",width="300px"),
+                                   helpText("Assume that the mule deer population consists of N individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
                                    p(tags$ul(
                                        tags$li("This is the first element in a list"),
                                        tags$li("This is the second element in a list")
