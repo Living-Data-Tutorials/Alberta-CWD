@@ -18,7 +18,7 @@ ui <- fluidPage(
                tabPanel("Page 1",value="page1",
                         # Application title
                         titlePanel("Modeling the spread of Chronic Wasting Disease in mule deer"),
-                        p("In this tutorial, we’re going to use a simple compartmental model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how vaccination could be used to drive CWD to extinction in our mule deer population."),
+                        p("In this tutorial, we're going to use a simple compartmental model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how vaccination could be used to drive CWD to extinction in our mule deer population."),
                         #Two columns
                         fluidRow(
                             column(width=12,
@@ -31,9 +31,8 @@ ui <- fluidPage(
                                    #this is a horizontal line break
                                    hr(),
                                    h1("How can we model the spread of CWD?"),
-                                   p("We will use a basic compartmental model, known as an SI model (Fig 3)."),
+                                   helpText("We will use a basic compartmental model, known as an SI model (Fig 3). Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
                                    tags$img(src="BasicModel.jpg",width="300px"),
-                                   helpText("Assume that the mule deer population consists of N individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
                                    p(tags$ul(
                                        tags$li("This is the first element in a list"),
                                        tags$li("This is the second element in a list")
