@@ -30,12 +30,19 @@ ui <- fluidPage(
                                    p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors (Fig. 1)."),
                                    tags$img(src="CWDMuleDeer.jpg",width="300px"),
                                    p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer (Fig. 2); if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
-                                   tags$img(src="CWDPrevalence.jpeg",width="300px"),
+                                   tags$img(src="CWDPrevalence1.jpeg",width="300px"),
                                    #this is a horizontal line break
                                    hr(),
                                    h1("How can we model the spread of CWD?"),
                                    helpText("We will use a basic compartmental model, known as an SI model (Fig 3). Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
-                                   tags$img(src="BasicModel.jpg",width="300px")
+                                   tags$img(src="BasicModel.jpg",width="300px"),
+                                   helpText("If we assume that the probability of interacting with infected individuals depends on their frequency in a population, \\(\\frac{I}{N}\\), then the average number of new infections in a single time period is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The average change in susceptible individuals in a single time period is therefore
+                                   $$ \\frac{dS}{dt} = - S \\cdot \\beta \\cdot \\frac{I}{N}$$
+Note that this term is negative because the susceptible individuals are lost to the infected class. Similarly, since all newly infected individuals go directly to the infected class, the average change in infected individuals in a single time period is
+$$ \\frac{dI}{dt} = S \\cdot \\beta \\cdot \\frac{I}{N}$$
+Based on these equations, we expect that a larger transmission rate (\\(\\beta\\)) will mean a faster spread of CWD as more susceptible individuals become infected, compared to a smaller transmission rate. Let’s check it out on the next page!
+")
+            
                             )
                         )
                ),
