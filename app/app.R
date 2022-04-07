@@ -30,7 +30,7 @@ ui <- fluidPage(
                                    p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors (Fig. 1)."),
                                    tags$img(src="CWDMuleDeer.jpg",width="300px"),
                                    p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer (Fig. 2); if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
-                                   tags$img(src="CWDPrevalence.jpg",width="300px"),
+                                   tags$img(src="CWDPrevalence.jpeg",width="300px"),
                                    #this is a horizontal line break
                                    hr(),
                                    h1("How can we model the spread of CWD?"),
