@@ -17,13 +17,16 @@ ui <- fluidPage(
     navbarPage("",id="mainpage",
                tabPanel("Page 1",value="page1",
                         # Application title
-                        titlePanel("Shiney Test"),
+                        titlePanel("Modeling the spread of Chronic Wasting Disease in mule deer"),
+                        p("In this tutorial, we’re going to use a simple compartmental model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how vaccination could be used to drive CWD to extinction in our mule deer population."),
                         #Two columns
                         fluidRow(
-                            column(width=8,
-                                   h1("h1 heading hello"),
-                                   h3("h3 heading"),
-                                   p("This is a paragraph"),
+                            column(width=12,
+                                   h1("What is CWD?"),
+                                   p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors (Fig. 1)."),
+                                   tags$img(src="CWDMuleDeer.jpg",width="300px"),
+                                   p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer (Fig. 2); if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
+                                   tags$img(src="CWDPrevalence.jpg",width="300px"),
                                    #this is a horizontal line break
                                    hr(),
                                    
