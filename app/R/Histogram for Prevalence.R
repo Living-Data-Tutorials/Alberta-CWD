@@ -7,4 +7,5 @@ ggplot(cwd,aes(x=Year,y=Prevalence,fill=Year))+
   geom_bar(stat="identity")+
   ylab("CWD Prevalence (%)")+
   theme_classic()+
-  scale_x_continuous(breaks=c(2006:2019))
+  scale_x_continuous(breaks=c(2006:2019))+
+  theme(legend.position="none")
