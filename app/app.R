@@ -72,7 +72,29 @@ ui <- fluidPage(
                                 plotOutput("gamma_plot_s")
                             )
                         ),
-                        p("Maybe here is more descriptions?"))
+                        p("Maybe here is more descriptions?")),
+               tabPanel("Vaccination",
+                        titlePanel("The vaccination parameter"),
+                        p("Here is a description of what we're doing here, which is letting students examine what vaccination does"),
+                        sidebarLayout(
+                            sidebarPanel(
+                                sliderInput("c_beta_parameter","Beta parameter",min=0,max=2,step=0.001,value=0),
+                                p("the slider above controls beta, which is the transmission parameter"),
+                                hr(),
+                                sliderInput("c_gamma_parameter","Gamma parameter",min=0,max=3,step=0.001,value=0),
+                                p("the slider above controls gamma, which is the death parameter"),
+                                hr(),
+                                sliderInput("c_c_parameter","Proportion vaccinated",min=0,max=1,step=0.001,value=0),
+                                p("the slider above controls c, which is the vaccination parameter"),
+                                hr(),
+                                span(textOutput("R0"),style="font-size:large")
+                            ),
+                            mainPanel(
+                                plotOutput("R0_plot")
+                            )
+                        )),
+               tabPanel("Birth",
+                        titlePanel("The birth parameter"))
     )
 )
 
@@ -89,27 +111,59 @@ server <- function(input, output) {
         xinit=c(S=1-0.0022,I=0.0022)
         predict_years=seq(2006,2050,by=0.25)
         predict_prevalence_i <- predict_i(predict_years,c(beta=input$gamma_beta_parameter,
-                                                        gamma=input$gamma_gamma_parameter),xinit)
+                                                        gamma=input$gamma_gamma_parameter,
+                                                        c=0),xinit)
         predict_prevalence_s <- predict_s(predict_years,c(beta=input$gamma_beta_parameter,
-                                                          gamma=input$gamma_gamma_parameter),xinit)
-        predict_prevalence_i <- predict_prevalence_i/(predict_prevalence_i+predict_prevalence_s)
-        predict_prevalence_s <- predict_prevalence_s/(predict_prevalence_i+predict_prevalence_s)
-        predict_df <- data.frame(Year=predict_years,Prevalence=predict_prevalence_i)
+                                                          gamma=input$gamma_gamma_parameter,
+                                                          c=0),xinit)
+        predict_prevalence_i <- predict_prevalence_i
+        predict_prevalence_s <- predict_prevalence_s
+        
+        predict_df <- data.frame(Year=predict_years,Prevalence_i=predict_prevalence_i,Prevalence_s=predict_prevalence_s)
 
-        base_data <- data %>% arrange(Year)
-        print(base_data$Year)
-        base_data$Prevalence <- base_data$Prevalence/((predict_prevalence_i+predict_prevalence_s)[(1:14)*4])
-        print(base_data$Prevalence)
-        predict_df <- data.frame(Year=predict_years,Prevalence=predict_prevalence_i)
-        base_graph(base_data)+geom_line(data=predict_df,aes(x=Year,y=Prevalence),size=1,color="red")+ylim(0,1)
+        base_data <- inner_join(data,predict_df)
+        
+        base_data$Prevalence <- base_data$Prevalence/(base_data$Prevalence_i+base_data$Prevalence_s)
+        
+        base_graph(base_data)+geom_line(data=predict_df,aes(x=Year,y=Prevalence_i),size=1,color="red")+ylim(0,1)
     })
     output$gamma_plot_s <-renderPlot({
         xinit=c(S=1-0.0022,I=0.0022)
         predict_years=seq(2006,2050,by=0.25)
-        predict_prevalence <- predict_s(predict_years,c(beta=input$gamma_beta_parameter,
-                                                        gamma=input$gamma_gamma_parameter),xinit)
-        predict_df <- data.frame(Year=predict_years,Prevalence=predict_prevalence)
-        base_graph(data)+geom_line(data=predict_df,aes(x=Year,y=Prevalence),size=1,color="red")+ylim(0,1)
+        predict_prevalence_i <- predict_i(predict_years,c(beta=input$gamma_beta_parameter,
+                                                          gamma=input$gamma_gamma_parameter,
+                                                          c=0),xinit)
+        predict_prevalence_s <- predict_s(predict_years,c(beta=input$gamma_beta_parameter,
+                                                          gamma=input$gamma_gamma_parameter,
+                                                          c=0),xinit)
+        predict_prevalence_i <- predict_prevalence_i
+        predict_prevalence_s <- predict_prevalence_s
+        
+        predict_df <- data.frame(Year=predict_years,Prevalence_i=predict_prevalence_i,Prevalence_s=predict_prevalence_s)
+        
+        
+        ggplot(predict_df,aes(x=Year,y=Prevalence_s))+geom_line(size=1,color="red")+theme_classic()+ylim(0,1)
+    })
+    
+    output$R0_plot <- renderPlot({
+        xinit=c(S=1-0.0022,I=0.0022)
+        predict_years=seq(2006,2050,by=0.25)
+        predict_prevalence_i <- predict_i(predict_years,c(beta=input$c_beta_parameter,
+                                                          gamma=input$c_gamma_parameter,
+                                                          c=input$c_c_parameter),xinit)
+        predict_prevalence_s <- predict_s(predict_years,c(beta=input$c_beta_parameter,
+                                                          gamma=input$c_gamma_parameter,
+                                                          c=input$c_c_parameter),xinit)
+        predict_prevalence_i <- predict_prevalence_i
+        predict_prevalence_s <- predict_prevalence_s
+        
+        predict_df <- data.frame(Year=predict_years,Prevalence_i=predict_prevalence_i,Prevalence_s=predict_prevalence_s)
+        
+        
+        ggplot(predict_df,aes(x=Year,y=Prevalence_i))+geom_line(size=1,color="red")+theme_classic()+ylim(0,1)
+    })
+    output$R0 <- renderText({
+        round(input$c_beta_parameter/input$c_gamma_parameter,2)
     })
     
 }

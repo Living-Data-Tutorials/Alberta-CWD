@@ -18,9 +18,10 @@ data <- data%>%arrange(Year)
 simodel=function(t,x,parms){
   beta=parms["beta"]
   gamma=parms["gamma"]
+  prop_vacc = parms["c"]
   r=rep(0,2)
-  r[1]=-beta*x["S"]*x["I"]/(x["S"]+x["I"])
-  r[2]=beta*x["S"]*x["I"]/(x["S"]+x["I"])-gamma*x["I"]
+  r[1]=-(1-prop_vacc)*beta*x["S"]*x["I"]/(x["S"]+x["I"]) 
+  r[2]=(1-prop_vacc)*beta*x["S"]*x["I"]/(x["S"]+x["I"])-gamma*x["I"]
   
   return(list(r))
 }
@@ -31,6 +32,9 @@ simodel=function(t,x,parms){
 #These functions return a vector of the state for each time point
 predict_i<- function(times,parms,xinit){
   #ode is the ode solver, func here is the simodel function that takes in t,x,parms and returns the derivatives
+  if(is.na(parms["c"])){
+    parms["c"]<-0
+  }
   out=ode(y=xinit,times=times,func=simodel,parms=parms)
   predictions=out[,3]
   predictions
