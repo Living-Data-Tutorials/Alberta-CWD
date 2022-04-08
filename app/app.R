@@ -28,18 +28,18 @@ ui <- fluidPage(
                             column(width=12,
                                    withMathJax(),
                                    h3("What is CWD?"),
-                                   p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors (Fig. 1)."),
+                                   p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors."),
                                    br(),
                                    tags$img(src="CWDMuleDeer.jpg",width="300px"),
                                    br(),
                                    br(),
                                    br(),
-                                   p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer (Fig. 2); if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
+                                   p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer; if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
                                    tags$img(src="CWDPrevalence1.jpeg",width="300px"),
                                    #this is a horizontal line break
                                    hr(),
                                    h3("How can we model the spread of CWD?"),
-                                   helpText("We will use a basic compartmental model, known as an SI model (Fig 3). Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
+                                   helpText("We will use a basic compartmental model, known as an SI model, to track the prevalence (proportion of infected individuals) of CWD over time. Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
                                    tags$img(src="BasicModel.jpg",width="300px"),
                                    helpText("If the proportion of infected individuals in a population is \\(\\frac{I}{N}\\), and \\(\\beta\\) is the rate at which individuals interact with each other, then the number of new infections in a single time period is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The rate of change in susceptible individuals in a single time period is therefore
                                    $$ \\frac{dS}{dt} = - S \\cdot \\beta \\cdot \\frac{I}{N}$$
@@ -57,10 +57,12 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                tabPanel("Transmission",
                         withMathJax(),
                         br(),
-                        titlePanel("The \\(\\beta\\) parameter for the model"),
+                        br(),
+                        titlePanel("The \\(\\beta\\) parameter"),
                         tags$div(
                             HTML(paste("Try exploring how different values of \\(\\beta\\) change the spread of the disease over time! The ", tags$strong("dots"), " are our real data, and the " , tags$span(style="color:red", "red line "), "is our model prediction.", sep = ""))
                         ),
+                        br(),
                         sidebarLayout(
                             sidebarPanel(
                                 sliderInput("beta_parameter","\\(\\beta\\)",0,3,0,step=0.001),
@@ -76,7 +78,10 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         withMathJax(),
                         br(),
                         titlePanel("The \\(\\gamma\\) parameter"),
+                        br(),
                         tags$img(src="ModelWithDeath.jpg",width="300px"),
+                        br(),
+                        br(),
                         helpText("Now we're going to look at what happens when infected individuals have a higher or lower death rate than the susceptible individuals. This death rate is measured by \\(\\gamma\\), where a higher \\(\\gamma\\) means a higher death rate for infected compared to susceptible individuals."),
                         sidebarLayout(
                             sidebarPanel(
@@ -96,9 +101,12 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         ),
                         p("Maybe here is more descriptions?")),
                tabPanel("Vaccination",
-                        titlePanel("The vaccination parameter, \\(v\\)"),
+                        titlePanel("The culling parameter, \\(c\\)"),
+                        br(),
                         tags$img(src="ModelWithVax.jpg",width="300px"),
                         withMathJax(),
+                        br(),
+                        br(),
                         helpText("Is there a benefit to developing a vaccine to fight CWD in mule deer? Even though one doesn't exist yet, we'll look at how a vaccine might be able to help control the infected population. Assume that we can afford to vaccinate only a proportion, \\(v\\) of the population, how large does \\(v\\) need to be?"),
                         sidebarLayout(
                             sidebarPanel(
