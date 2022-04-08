@@ -79,12 +79,12 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                                    h3("Think about..."),
                                    tags$ol(
                                        tags$li("What happens to the prevalence when the transmission rate is 0? What about when it is at it's maximum (3 here)?"), 
-                                       tags$li("What value of \\(\\beta\\) allows the model to best fit the data?"),
+                                       tags$li("What value of \\(\\beta\\) allows the model to best fit the data?")
                                    )
                             ),
                             column(width=4,align="center",
                                    actionButton("next2","Next Page",
-                                                style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%"),
+                                                style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%")
                                    )
                         ),
                         br(),
@@ -106,7 +106,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                                 helpText("The slider above controls \\(\\beta\\), which is the transmission parameter"),
                                 hr(),
                                 sliderInput("gamma_gamma_parameter","\\(\\gamma\\)",min=0,max=3,step=0.001,value=0),
-                                helpText("the slider above controls \\(\\gamma\\), which is the death parameter"),
+                                helpText("the slider above controls \\(\\gamma\\), which is the death parameter")
                             ),
                             mainPanel(
                                 plotOutput("gamma_plot_i")
@@ -123,7 +123,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                                    ),
                             column(width=4,align="center",
                                    actionButton("next3","Next Page",
-                                                style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%"),
+                                                style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%")
                                    )
                         ),
                         
