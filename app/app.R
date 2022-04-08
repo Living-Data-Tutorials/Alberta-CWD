@@ -53,9 +53,10 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                ),
                tabPanel("Transmission",value="page2",
                         withMathJax(),
-                        br(),
-                        br(),
                         titlePanel("The \\(\\beta\\) parameter"),
+                        br(),
+                        tags$img(src="BasicModel.jpg",height="20%",width="20%"),
+                        br(),
                         tags$div(
                             HTML(paste("Try exploring how different values of \\(\\beta\\) change the spread of the disease over time! The ", tags$strong(" black dots"), " are our real data, the " , tags$span(style="color:red", "red line "), "is our model prediction for prevalence, the ",  tags$span(style="color:blue", "blue line "), "is our prediction for the number of susceptible individuals, and the ", tags$strong("black dashed line"), "is our prediction for the total number of individuals, all relative to the size of the population before it was infected by CWD.", sep = ""))
                         ),
