@@ -73,7 +73,14 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                             )
                         ),
                         hr(),
-                        p("Maybe here is more descriptions?")),
+                        h3("Think about..."),
+                        tags$ol(
+                            tags$li("What happens to the prevalence when the transmission rate is 0? What about when it is at it's maximum (3 here)?"), 
+                            tags$li("What value of \\(\\beta\\) allows the model to best fit the data?"),
+                        ),
+                        br(),
+                        br(),
+                        br()),
                tabPanel("Death",
                         withMathJax(),
                         br(),
@@ -83,6 +90,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         br(),
                         helpText("Now we're going to look at what happens when infected individuals have a higher or lower death rate than the susceptible individuals. This death rate is measured by \\(\\gamma\\), where a higher \\(\\gamma\\) means a higher death rate for infected compared to susceptible individuals."),
+                        br(),
                         sidebarLayout(
                             sidebarPanel(
                                 sliderInput("gamma_beta_parameter","\\(\\beta\\)",min=0,max=2,step=0.001,value=0),
@@ -99,7 +107,17 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                                 plotOutput("gamma_plot_s")
                             )
                         ),
-                        p("Maybe here is more descriptions?")),
+                        hr(),
+                        h3("Think about..."),
+                        tags$ol(
+                            tags$li("What happens to the prevalence when we account for extra death of infected individuals (\\(\\gamma > 0)\\) ?"), 
+                            tags$li("What happens to the prevalence when the transmission rate is greater than the death rate (\\(\\beta > \\gamma\\)) ? What about when \\(\\beta < \\gamma\\) ? How does this affect the number of individuals?"),
+                        ),
+                        br(),
+                        br(),
+                        br(),
+                        
+                        ),
                tabPanel("Vaccination",
                         titlePanel("The culling parameter, \\(c\\)"),
                         br(),
@@ -108,6 +126,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         br(),
                         helpText("Is there a benefit to developing a vaccine to fight CWD in mule deer? Even though one doesn't exist yet, we'll look at how a vaccine might be able to help control the infected population. Assume that we can afford to vaccinate only a proportion, \\(v\\) of the population, how large does \\(v\\) need to be?"),
+                        br(),
                         sidebarLayout(
                             sidebarPanel(
                                 sliderInput("c_beta_parameter","\\(\\beta\\)",min=0,max=2,step=0.001,value=0),
