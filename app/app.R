@@ -163,10 +163,10 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         helpText("The rate of spread of CWD increases with the transmission rate \\(\\beta\\), but decreases with the infectious death rate \\(\\gamma\\) because we assume that individuals can only spread the disease while they're still alive. In fact, we can calculate the number of new infections that a single infected individual produces in a new population of all susceptible individuals as $$R_0=\\frac{\\beta}{\\gamma}$$ When \\(R_0 > 1\\), a typical infected individual will infect more than one susceptible individual and the disease spreads. However, if \\(R_0 < 1\\), infected individuals cannot replace themselves and CWD will not spread in the new population."),
                         br(),
                         tags$div(
-                            HTML(paste(tags$strong("KEY POINT :"), "Culling changes this prediction. With culling, we reduce the number of susceptible individuals to a fraction, \\((1-c)\\) of their number before the culls. These culls effectively reduce the contact rate among individuals, so that the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). With culling, \\(R_0\\) becomes $$R_0=(1-c) \\cdot \\frac{\\beta}{\\gamma}$$"), sep = "")),
+                            HTML(paste(tags$strong("KEY POINT :"), "Culling changes this prediction. With culling, we reduce the number of susceptible individuals to a fraction, \\((1-c)\\) of their number before the culls. These culls effectively reduce the contact rate among individuals, so that the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). With culling, the average number of new infections from a single infected individual becomes $$(1-c) \\cdot \\frac{\\beta}{\\gamma}$$"), sep = "")),
                         h3("Think about..."),
                         tags$ol(
-                            tags$li("If we have a population of only susceptibles, what proportion do we need to cull to prevent CWD from spreading in the population (\\(R_0<1\\)) ?"),
+                            tags$li("If we have a population of only susceptibles, what proportion do we need to cull to prevent CWD from spreading in the population? Why is this the case?"),
                             tags$li("How does culling susceptible individuals change the relative proportions of susceptible and infected individuals? What about the (scaled) population size?")
                         ),
                         br(),
