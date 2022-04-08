@@ -118,7 +118,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                                    h3("Think about..."),
                                    tags$ol(
                                        tags$li("What happens to the prevalence when we account for extra death of infected individuals (\\(\\gamma > 0)\\) ?"), 
-                                       tags$li("What happens to the prevalence when the transmission rate is greater than the death rate (\\(\\beta > \\gamma\\)) ? What about when \\(\\beta < \\gamma\\) ? How does this affect the number of individuals?"),
+                                       tags$li("What happens to the prevalence when the transmission rate is greater than the death rate (\\(\\beta > \\gamma\\)) ? What about when \\(\\beta < \\gamma\\) ? How does this affect the number of individuals?")
                                    ),
                                    ),
                             column(width=4,align="center",
