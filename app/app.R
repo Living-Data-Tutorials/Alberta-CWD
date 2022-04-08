@@ -172,9 +172,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         br(),
                         br()
-               ),
-               tabPanel("Birth",value="page5",
-                        titlePanel("The birth parameter"))
+               )
     )
 )
 # Define server logic required to draw a histogram
