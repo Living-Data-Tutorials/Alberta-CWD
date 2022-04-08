@@ -6,15 +6,11 @@
 #
 #    http://shiny.rstudio.com/
 #
-
 library(shiny)
 library(tidyverse)
 data <- read.csv("Data/wasting_disease.csv")
-
 source("R/prediction.R")
 source("R/base_graph.R")
-
-
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     navbarPage("",id="mainpage",
@@ -22,25 +18,25 @@ ui <- fluidPage(
                         # Application title
                         titlePanel("Modeling the spread of Chronic Wasting Disease in mule deer"),
                         br(),
-                        p("In this tutorial, we're going to use a simple compartmental model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how vaccination could be used to drive CWD to extinction in our mule deer population."),
+                        p("In this tutorial, we're going to use a simple compartmental model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how culling of susceptibles could be used to drive CWD to extinction in our mule deer population."),
                         withMathJax(),
                         h3("What is CWD?"),
                         p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors."),
                         br(),
-                        tags$img(src="CWDMuleDeer.jpg",width="300px"),
+                        tags$img(src="CWDMuleDeer.jpg",height= "40%", width="40%",style="display: block; margin-left: auto; margin-right: auto;"),
                         br(),
                         br(),
                         br(),
                         p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer; if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
-                        tags$img(src="CWDPrevalence1.jpeg",width="300px"),
+                        tags$img(src="CWDPrevalence2.jpeg",height="50%",width="50%",style="display: block; margin-left: auto; margin-right: auto;"),
                         #this is a horizontal line break
                         hr(),
                         h3("How can we model the spread of CWD?"),
                         helpText("We will use a basic compartmental model, known as an SI model, to track the prevalence (proportion of infected individuals) of CWD over time. Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
-                        tags$img(src="BasicModel.jpg",width="300px"),
-                        helpText("If the proportion of infected individuals in a population is \\(\\frac{I}{N}\\), and \\(\\beta\\) is the rate at which individuals interact with each other, then the number of new infections in a single time period is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The rate of change in susceptible individuals in a single time period is therefore
+                        tags$img(src="BasicModel.jpg",height="30%", width="30%",style="display: block; margin-left: auto; margin-right: auto;"),
+                        helpText("If the proportion of infected individuals in a population is \\(\\frac{I}{N}\\), and \\(\\beta\\) is the rate at which individuals interact with each other, then the number of new infections in a single year is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The rate of change in susceptible individuals in a single year is therefore
                                    $$ \\frac{dS}{dt} = - S \\cdot \\beta \\cdot \\frac{I}{N}$$
-Note that this term is negative because the susceptible individuals are lost to the infected class. Similarly, since all newly infected individuals go directly to the infected class, the rate of change in infected individuals in a single time period is
+Note that this term is negative because the susceptible individuals are lost to the infected class. Similarly, since all newly infected individuals go directly to the infected class, the rate of change in infected individuals in a single year is
 $$ \\frac{dI}{dt} = S \\cdot \\beta \\cdot \\frac{I}{N}$$
 Based on these equations, we expect that a larger transmission rate (\\(\\beta\\)) will mean a faster spread of CWD as more susceptible individuals become infected, compared to a smaller transmission rate. Let’s check it out on the next page!
 "),
@@ -61,7 +57,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         titlePanel("The \\(\\beta\\) parameter"),
                         tags$div(
-                            HTML(paste("Try exploring how different values of \\(\\beta\\) change the spread of the disease over time! The ", tags$strong("dots"), " are our real data, and the " , tags$span(style="color:red", "red line "), "is our model prediction.", sep = ""))
+                            HTML(paste("Try exploring how different values of \\(\\beta\\) change the spread of the disease over time! The ", tags$strong(" black dots"), " are our real data, the " , tags$span(style="color:red", "red line "), "is our model prediction for prevalence, the ",  tags$span(style="color:blue", "blue line "), "is our prediction for the number of susceptible individuals, and the ", tags$strong("black dashed line"), "is our prediction for the total number of individuals, all relative to the size of the population before it was infected by CWD.", sep = ""))
                         ),
                         br(),
                         sidebarLayout(
@@ -85,7 +81,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                             column(width=4,align="center",
                                    actionButton("next2","Next Page",
                                                 style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%")
-                                   )
+                            )
                         ),
                         br(),
                         br(),
@@ -95,7 +91,7 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         titlePanel("The \\(\\gamma\\) parameter"),
                         br(),
-                        tags$img(src="ModelWithDeath.jpg",width="300px"),
+                        tags$img(src="ModelWithDeath.jpg",height="35%",width="35%"),
                         br(),
                         br(),
                         helpText("Now we're going to look at what happens when infected individuals have a higher or lower death rate than the susceptible individuals. This death rate is measured by \\(\\gamma\\), where a higher \\(\\gamma\\) means a higher death rate for infected compared to susceptible individuals."),
@@ -118,13 +114,15 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                                    h3("Think about..."),
                                    tags$ol(
                                        tags$li("What happens to the prevalence when we account for extra death of infected individuals (\\(\\gamma > 0)\\) ?"), 
+                                       tags$li("What happens to the prevalence when the transmission rate is greater than the death rate (\\(\\beta > \\gamma\\)) ? What about when \\(\\beta < \\gamma\\) ? How does this affect the total number of individuals in the population, relative to its size before infection with CWD?"),
                                        tags$li("What happens to the prevalence when the transmission rate is greater than the death rate (\\(\\beta > \\gamma\\)) ? What about when \\(\\beta < \\gamma\\) ? How does this affect the number of individuals?")
                                    ),
-                                   ),
+                                   br(),
+                            ),
                             column(width=4,align="center",
                                    actionButton("next3","Next Page",
                                                 style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%")
-                                   )
+                            )
                         ),
                         
                         br(),
@@ -132,14 +130,15 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         
                ),
-               tabPanel("Vaccination",value="page4",
+               tabPanel("Culling Strategy",value="page4",
                         titlePanel("The culling parameter, \\(c\\)"),
                         br(),
-                        tags$img(src="ModelWithVax.jpg",width="300px"),
+                        tags$img(src="ModelWithCull.jpg",height="40%",width="40%"),
                         withMathJax(),
                         br(),
                         br(),
-                        helpText("Is there a benefit to developing a vaccine to fight CWD in mule deer? Even though one doesn't exist yet, we'll look at how a vaccine might be able to help control the infected population. Assume that we can afford to vaccinate only a proportion, \\(v\\) of the population, how large does \\(v\\) need to be?"),
+                        h4("Would initiating culls of susceptibles help fight CWD in mule deer?"),
+                        helpText("Assume we cull a proportion, \\(c\\) of a new, completely susceptible population that interacts with infected individuals. How large does \\(c\\) need to be to prevent the spread of CWD?"),
                         br(),
                         sidebarLayout(
                             sidebarPanel(
@@ -149,22 +148,36 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                                 sliderInput("c_gamma_parameter","\\(\\gamma\\)",min=0,max=3,step=0.001,value=0),
                                 p("the slider above controls \\(\\gamma\\), which is the death parameter"),
                                 hr(),
-                                sliderInput("c_c_parameter","\\(v\\)",min=0,max=1,step=0.001,value=0),
-                                p("the slider above controls \\(v\\), which is the vaccination parameter"),
+                                sliderInput("c_c_parameter","\\(c\\)",min=0,max=1,step=0.001,value=0),
+                                p("the slider above controls \\(c\\), which is the culling parameter"),
                                 hr(),
-                                span(textOutput("R0"),style="font-size:large"),
+                                span(uiOutput("R0"),style="font-size:large"),
                                 hr(),
                                 span(textOutput("final_pop"),style="font-size:large"),
                             ),
                             mainPanel(
                                 plotOutput("R0_plot")
-                            )
-                        )),
+                            ),
+                        ),
+                        hr(),
+                        h3("What is \\(R_0\\)?"),
+                        helpText("The rate of spread of CWD increases with the transmission rate \\(\\beta\\), but decreases with the infectious death rate \\(\\gamma\\) because we assume that individuals can only spread the disease while they're still alive. In fact, we can calculate the number of new infections that a single infected individual produces in a new population of all susceptible individuals as $$R_0=\\frac{\\beta}{\\gamma}$$ When \\(R_0 > 1\\), a typical infected individual will infect more than one susceptible individual and the disease spreads. However, if \\(R_0 < 1\\), infected individuals cannot replace themselves and CWD will not spread in the new population."),
+                        br(),
+                        tags$div(
+                            HTML(paste(tags$strong("KEY POINT :"), "Culling changes this prediction. With culling, we reduce the number of susceptible individuals to a fraction, \\((1-c)\\) of their number before the culls. These culls effectively reduce the contact rate among individuals, so that the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). With culling, \\(R_0\\) becomes $$R_0=(1-c) \\cdot \\frac{\\beta}{\\gamma}$$"), sep = "")),
+                        h3("Think about..."),
+                        tags$ol(
+                            tags$li("If we have a population of only susceptibles, what proportion do we need to cull to prevent CWD from spreading in the population (\\(R_0<1\\)) ?"),
+                            tags$li("How does culling susceptible individuals change the relative proportions of susceptible and infected individuals? What about the (scaled) population size?")
+                        ),
+                        br(),
+                        br(),
+                        br()
+               ),
                tabPanel("Birth",value="page5",
                         titlePanel("The birth parameter"))
     )
 )
-
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
     observe({
@@ -241,11 +254,11 @@ server <- function(input, output, session) {
             theme(axis.text=element_text(size=14),
                   axis.title=element_text(size=16,face="bold"))
     })
-    output$R0 <- renderText({
+    output$R0 <- renderUI({
         r0=round(input$c_beta_parameter/input$c_gamma_parameter,2)
         if(is.nan(r0)){r0 <- 0}
         if(is.infinite(r0)){r0 <- "Not defined"}
-        paste0("R0 for this disease: ",r0)
+        withMathJax(helpText("\\(R_0\\) for this disease: ",r0))
     })
     output$final_pop <- renderText({
         xinit=c(S=1-0.0022,I=0.0022)
@@ -273,6 +286,5 @@ server <- function(input, output, session) {
         updateTabsetPanel(session,"mainpage",selected="page5")
     })
 }
-
 # Run the application 
 shinyApp(ui = ui, server = server)
