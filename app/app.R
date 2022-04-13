@@ -18,29 +18,50 @@ ui <- fluidPage(
                         # Application title
                         titlePanel("Modeling the spread of Chronic Wasting Disease in mule deer"),
                         br(),
-                        p("In this tutorial, we're going to use a simple compartmental model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how culling of susceptibles could be used to drive CWD to extinction in our mule deer population."),
+                        p("In this tutorial, we're going to use a simple SI model to track the spread of Chronic Wasting Disease (CWD) in an Albertan mule deer over time. We’ll then use the same model to look at how culling of susceptibles could be used to drive CWD to extinction in our mule deer population."),
                         withMathJax(),
+                        h3("Learning Objectives"),
+                        tags$ol(
+                            tags$li("Become familiar with the components of a simple SI model, and how they can be applied to predict the spread of a disease through time."),
+                            tags$li("Understand the role of \\(R_0\\) in determining the spread of a disease."),
+                            tags$li("Learn how strategies such as culling can be used with knowledge of \\(R_0\\) to prevent the spread of a disease.")
+                        ),
+                        hr(),
                         h3("What is CWD?"),
-                        p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors."),
+                        p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors. There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months)."),
                         br(),
                         tags$img(src="CWDMuleDeer.jpg",height= "40%", width="40%",style="display: block; margin-left: auto; margin-right: auto;"),
                         br(),
                         br(),
                         br(),
-                        p("There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months). CWD is increasing exponentially in Albertan mule deer; if we can predict the spread of CWD in the future, we can decide how concerned we should be about this disease taking over the population."),
+                        h3("The Problem"),
+                        p("Data show that CWD has increased exponentially in Albertan mule deer from 2006-2019. (insert ref here.)"),
+                        br(),
                         tags$img(src="CWDPrevalence2.jpeg",height="50%",width="50%",style="display: block; margin-left: auto; margin-right: auto;"),
-                        #this is a horizontal line break
-                        hr(),
+                        br(),
+                        tags$strong("Will this trend continue?"),
+                        p("If we can predict the spread of CWD in Albertan mule deer, we can decide how concerned we should be about this disease taking over the population."),
+                        br(),
+                        br(),
+                        br()),
+               tabPanel("Modeling CWD",value="page2",
                         h3("How can we model the spread of CWD?"),
-                        helpText("We will use a basic compartmental model, known as an SI model, to track the prevalence (proportion of infected individuals) of CWD over time. Assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: \\(S\\) (susceptible) and \\(I\\) (infected, with CWD). The population is at equilibrium, such that the birth and death rate are exactly equal. The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
-                        tags$img(src="BasicModel.jpg",height="30%", width="30%",style="display: block; margin-left: auto; margin-right: auto;"),
-                        helpText("If the proportion of infected individuals in a population is \\(\\frac{I}{N}\\), and \\(\\beta\\) is the rate at which individuals interact with each other, then the number of new infections in a single year is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The rate of change in susceptible individuals in a single year is therefore
-                                   $$ \\frac{dS}{dt} = - S \\cdot \\beta \\cdot \\frac{I}{N}$$
-Note that this term is negative because the susceptible individuals are lost to the infected class. Similarly, since all newly infected individuals go directly to the infected class, the rate of change in infected individuals in a single year is
-$$ \\frac{dI}{dt} = S \\cdot \\beta \\cdot \\frac{I}{N}$$
-Based on these equations, we expect that a larger transmission rate (\\(\\beta\\)) will mean a faster spread of CWD as more susceptible individuals become infected, compared to a smaller transmission rate. Let’s check it out on the next page!
-"),
+                        HTML(paste("We will use a basic compartmental model, known as an SI model, to track the ", tags$strong("prevalence "),"of CWD in mule deer over time. We assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: ", tags$strong("\\(S\\) (susceptible) "), "and ", tags$strong("\\(I\\) (infected)"), ". The birth and death rates are exactly equal in the two groups, so we can say that the population is at ", tags$strong("equilibrium."), sep="")),
+                        br(),
+                        br(),
+                        HTML(paste(tags$strong("Prevalence: "), "The proportion of infected individuals in a population.", sep="")),
+                        br(),
+                        HTML(paste(tags$strong("Susceptible: "), "Individuals capable of being affected by the disease.", sep="")),
+                        br(),
+                        HTML(paste(tags$strong("Infected: "), "Individuals who have the disease.", sep="")),
+                        br(),
+                        HTML(paste(tags$strong("Equilibrium: "), "A population with constant numbers (improve this when not tired)", sep="")),
+                        br(),
                         hr(),
+                        p("Insert text about what's to come here."),
+                        br(),
+                        br(),
+                        br(),
                         fluidRow(
                             column(width=12,align="center",
                                    actionButton("start","Start",
@@ -51,11 +72,18 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         br()
                ),
-               tabPanel("Transmission",value="page2",
+               tabPanel("Transmission",value="page3",
                         withMathJax(),
                         titlePanel("The \\(\\beta\\) parameter"),
                         br(),
-                        tags$img(src="BasicModel.jpg",height="20%",width="20%"),
+                        tags$img(src="BasicModel.jpg",height="25%",width="25%",style="display: block; margin-left: auto; margin-right: auto;"),
+                        helpText("The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
+                        helpText("If the proportion of infected individuals in a population is \\(\\frac{I}{N}\\), and \\(\\beta\\) is the rate at which individuals interact with each other, then the number of new infections in a single year is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The rate of change in susceptible individuals in a single year is therefore
+                        $$ \\frac{dS}{dt} = - S \\cdot \\beta \\cdot \\frac{I}{N}$$
+                            Note that this term is negative because the susceptible individuals are lost to the infected class. Similarly, since all newly infected individuals go directly to the infected class, the rate of change in infected individuals in a single year is
+                        $$ \\frac{dI}{dt} = S \\cdot \\beta \\cdot \\frac{I}{N}$$
+                            Based on these equations, we expect that a larger transmission rate (\\(\\beta\\)) will mean a faster spread of CWD as more susceptible individuals become infected, compared to a smaller transmission rate. Let’s check it out on the next page!
+                            "),
                         br(),
                         tags$div(
                             HTML(paste("Try exploring how different values of \\(\\beta\\) change the spread of the disease over time! The ", tags$strong(" black dots"), " are our real data, the " , tags$span(style="color:red", "red line "), "is our model prediction for prevalence, the ",  tags$span(style="color:blue", "blue line "), "is our prediction for the number of susceptible individuals, and the ", tags$strong("black dashed line"), "is our prediction for the total number of individuals, all relative to the size of the population before it was infected by CWD.", sep = ""))
@@ -87,12 +115,12 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         br(),
                         br()),
-               tabPanel("Death",value="page3",
+               tabPanel("Death",value="page4",
                         withMathJax(),
                         br(),
                         titlePanel("The \\(\\gamma\\) parameter"),
                         br(),
-                        tags$img(src="ModelWithDeath.jpg",height="35%",width="35%"),
+                        tags$img(src="ModelWithDeath.jpg",height="35%",width="35%",style="display: block; margin-left: auto; margin-right: auto;"),
                         br(),
                         br(),
                         helpText("Now we're going to look at what happens when infected individuals have a higher or lower death rate than the susceptible individuals. This death rate is measured by \\(\\gamma\\), where a higher \\(\\gamma\\) means a higher death rate for infected compared to susceptible individuals."),
@@ -130,10 +158,10 @@ Based on these equations, we expect that a larger transmission rate (\\(\\beta\\
                         br(),
                         
                ),
-               tabPanel("Culling Strategy",value="page4",
+               tabPanel("Culling Strategy",value="page5",
                         titlePanel("The culling parameter, \\(c\\)"),
                         br(),
-                        tags$img(src="ModelWithCull.jpg",height="40%",width="40%"),
+                        tags$img(src="ModelWithCull.jpg",height="40%",width="40%",style="display: block; margin-left: auto; margin-right: auto;"),
                         withMathJax(),
                         br(),
                         br(),
