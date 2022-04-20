@@ -46,7 +46,10 @@ ui <- fluidPage(
                         br()),
                tabPanel("Modeling CWD",value="page2",
                         h3("How can we model the spread of CWD?"),
-                        HTML(paste("We will use a basic compartmental model, known as an SI model, to track the ", tags$strong("prevalence "),"of CWD in mule deer over time. We assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: ", tags$strong("\\(S\\) (susceptible) "), "and ", tags$strong("\\(I\\) (infected)"), ". The birth and death rates are exactly equal in the two groups, so we can say that the population is at ", tags$strong("equilibrium."), sep="")),
+                        br(),
+                        tags$img(src="SI.jpg",height="25%",width="25%",style="display: block; margin-left: auto; margin-right: auto;"),
+                        br(),
+                        HTML(paste("We will use a basic compartmental model, known as an SI model, to track the ", tags$strong("prevalence "),"of CWD in mule deer over time. We assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: ", tags$strong("\\(S\\) (susceptible) "), "and ", tags$strong("\\(I\\) (infected)"), ". The birth and death rates are exactly equal in the two groups, so we can say that the population is at ", tags$strong("equilibrium."),  sep="")),
                         br(),
                         br(),
                         HTML(paste(tags$strong("Prevalence: "), "The proportion of infected individuals in a population.", sep="")),
@@ -55,10 +58,12 @@ ui <- fluidPage(
                         br(),
                         HTML(paste(tags$strong("Infected: "), "Individuals who have the disease.", sep="")),
                         br(),
-                        HTML(paste(tags$strong("Equilibrium: "), "A population with constant numbers (improve this when not tired)", sep="")),
+                        HTML(paste(tags$strong("Equilibrium (of a population): "), "A population with equal birth and death rates, such that the number of individuals remains constant through time", sep="")),
                         br(),
                         hr(),
-                        p("Insert text about what's to come here."),
+                        HTML(paste("In this tutorial, we are going to look at 3 factors that could influence the spread of CWD over time: the ", tags$strong("transmission rate (\\(\\beta\\)), "), "the ", tags$strong("excess death rate of infected individuals (\\(\\gamma\\))"), ", and the effects of ", tags$strong("culling susceptible individuals. "), sep="")),
+                        br(),
+                        HTML(paste("Click the 'start' button to explore what happens when we allow susceptible individuals to become infected - in other words, when we allow transmission of the disease.")),
                         br(),
                         br(),
                         br(),
@@ -74,15 +79,16 @@ ui <- fluidPage(
                ),
                tabPanel("Transmission",value="page3",
                         withMathJax(),
-                        titlePanel("The \\(\\beta\\) parameter"),
+                        titlePanel("Transmission (the \\(\\beta\\) parameter)"),
                         br(),
                         tags$img(src="BasicModel.jpg",height="25%",width="25%",style="display: block; margin-left: auto; margin-right: auto;"),
-                        helpText("The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals."),
+                        br(),
+                        helpText("The transmission rate, \\(\\beta\\), determines how quickly the disease spreads from infected to susceptible individuals. Once infected, the susceptible individuals move from class 'S' to class 'I'."),
                         helpText("If the proportion of infected individuals in a population is \\(\\frac{I}{N}\\), and \\(\\beta\\) is the rate at which individuals interact with each other, then the number of new infections in a single year is $$S \\cdot \\beta \\cdot \\frac{I}{N}$$ This is the average number of susceptible individuals that interact with an infected individual, multiplied by the transmission rate. The rate of change in susceptible individuals in a single year is therefore
                         $$ \\frac{dS}{dt} = - S \\cdot \\beta \\cdot \\frac{I}{N}$$
                             Note that this term is negative because the susceptible individuals are lost to the infected class. Similarly, since all newly infected individuals go directly to the infected class, the rate of change in infected individuals in a single year is
                         $$ \\frac{dI}{dt} = S \\cdot \\beta \\cdot \\frac{I}{N}$$
-                            Based on these equations, we expect that a larger transmission rate (\\(\\beta\\)) will mean a faster spread of CWD as more susceptible individuals become infected, compared to a smaller transmission rate. Let’s check it out on the next page!
+                            Based on these equations, we expect that a larger transmission rate (\\(\\beta\\)) will mean a faster spread of CWD as more susceptible individuals become infected, compared to a smaller transmission rate. Let’s check it out below!
                             "),
                         br(),
                         tags$div(
