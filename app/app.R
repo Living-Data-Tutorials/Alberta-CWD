@@ -43,7 +43,17 @@ ui <- fluidPage(
                         p("If we can predict the spread of CWD in Albertan mule deer, we can decide how concerned we should be about this disease taking over the population."),
                         br(),
                         br(),
+                        br(),
+                        fluidRow(
+                            column(width=12,align="center",
+                                   actionButton("start","Start",
+                                                style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%")
+                            )
+                        ),
+                        br(),
+                        br(),
                         br()),
+               
                tabPanel("Modeling CWD",value="page2",
                         h3("How can we model the spread of CWD?"),
                         br(),
@@ -69,7 +79,7 @@ ui <- fluidPage(
                         br(),
                         fluidRow(
                             column(width=12,align="center",
-                                   actionButton("start","Start",
+                                   actionButton("next1","Next Page",
                                                 style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%")
                             )
                         ),
@@ -199,11 +209,20 @@ ui <- fluidPage(
                         br(),
                         tags$div(
                             HTML(paste(tags$strong("KEY POINT :"), "Culling changes this prediction. With culling, we reduce the number of susceptible individuals to a fraction, \\((1-c)\\) of their number before the culls. These culls effectively reduce the contact rate among individuals, so that the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). With culling, the average number of new infections from a single infected individual becomes $$(1-c) \\cdot \\frac{\\beta}{\\gamma}$$"), sep = "")),
-                        h3("Think about..."),
-                        tags$ol(
-                            tags$li("If we have a population of only susceptibles, what proportion do we need to cull to prevent CWD from spreading in the population? Why is this the case?"),
-                            tags$li("How does culling susceptible individuals change the relative proportions of susceptible and infected individuals? What about the (scaled) population size?")
+                        fluidRow(
+                            column(width=8,
+                                   h3("Think about..."),
+                                   tags$ol(
+                                       tags$li("If we have a population of only susceptibles, what proportion do we need to cull to prevent CWD from spreading in the population? Why is this the case?"),
+                                       tags$li("How does culling susceptible individuals change the relative proportions of susceptible and infected individuals? What about the (scaled) population size?")
+                                   ),
+                            ),
+                            column(width=4,align="center",
+                                   actionButton("next4","Next Page",
+                                                style="color: #fff; background-color: #337ab7; border-color: #2e6da4; padding:5px; font-size:150%")
+                            )
                         ),
+                        
                         br(),
                         br(),
                         br()
@@ -308,14 +327,20 @@ server <- function(input, output, session) {
     observeEvent(input$start,{
         updateTabsetPanel(session,"mainpage",selected="page2")
     })
-    observeEvent(input$next2,{
+    observeEvent(input$next1,{
         updateTabsetPanel(session,"mainpage",selected="page3")
     })
-    observeEvent(input$next3,{
+    observeEvent(input$next2,{
         updateTabsetPanel(session,"mainpage",selected="page4")
     })
-    observeEvent(input$next4,{
+    observeEvent(input$next3,{
         updateTabsetPanel(session,"mainpage",selected="page5")
+    })
+    observeEvent(input$next4,{
+        updateTabsetPanel(session,"mainpage",selected="page6")
+    })
+    observeEvent(input$next5,{
+        updateTabsetPanel(session,"mainpage",selected="page7")
     })
 }
 # Run the application 
