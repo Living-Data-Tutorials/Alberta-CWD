@@ -211,7 +211,7 @@ ui <- fluidPage(
                         p("In our simple model, this is is also equivalent to vaccinating a proportion of the susceptible population equal to \\(c\\) with a vaccine that perfectly prevents infection."),
                         hr(),
                         p("Try exploring how culling different proportions of the susceptible population (\\(c\\)) changes how the disease spreads. In the sidebar, we have also included a calculation of \\(R_0\\), 
-                          which is an intrinsic property of the disease and only depends on \\(\\beta\\) and \\(\\gamma\\). We have also included the population size after 100 years (scaled to the original population size) 
+                          which is an intrinsic property of the disease and only depends on \\(\\beta\\) and \\(\\gamma\\) (i.e., \\(R_0\\) is not itself changed by culling). We have also included the population size after 100 years (scaled to the original population size) 
                           in order to illustrate the long-term dynamics of the disease."),
                         tags$div(
                             HTML(paste("As a reminder, the ", tags$strong(" black dots"), " are our real data, the " , tags$span(style="color:red", "red line "), "is our model prediction for prevalence, the ",  tags$span(style="color:blue", "blue line "), "is our prediction for the number of susceptible individuals, and the ", tags$strong("black dashed line"), " is our prediction for the total number of individuals, all relative to the size of the population before it was infected by CWD.", sep = ""))
@@ -244,7 +244,6 @@ ui <- fluidPage(
                                    tags$ol(
                                        tags$li("If we have a new population of only susceptibles, what proportion do we need to cull to prevent CWD from spreading in the population, from a single infected individual? Why is this the case?"),
                                        tags$li("How does culling susceptible individuals change the relative proportions of susceptible and infected individuals? What about the (scaled) population size?"),
-                                       tags$li("Does culling change \\(R_0\\)? Why or why not?"),
                                    ),
                             ),
                             column(width=4,align="center",
