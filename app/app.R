@@ -357,12 +357,10 @@ server <- function(input, output, session) {
         
         base_data$Prevalence <- base_data$Prevalence/(base_data$Prevalence_i+base_data$Prevalence_s)
         
-        ggplot(data=predict_df,aes(x=Year,y=Prevalence_i))+geom_line(size=1,color="red")+
+
+        base_graph(base_data)+geom_line(data=predict_df,aes(x=Year,y=Prevalence_i),size=1,color="red")+
             geom_line(data=predict_df,aes(x=Year,y=Prevalence_s),size=1,color="blue")+
-            geom_line(data=predict_df,aes(x=Year,y=N),size=1,linetype="dashed")+ylim(0,1.01)+theme_classic()+
-            xlab("Year")+ylab("Population Size (scaled to the \n pre-pandemic population size)")+
-            theme(axis.text=element_text(size=14),
-                  axis.title=element_text(size=16,face="bold"))
+            geom_line(data=predict_df,aes(x=Year,y=N),size=1,linetype="dashed")+ylim(0,1.01)
     })
     output$R0 <- renderUI({
         r0=round(input$c_beta_parameter/input$c_gamma_parameter,2)
