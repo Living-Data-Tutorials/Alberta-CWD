@@ -16,20 +16,20 @@ ui <- fluidPage(
     navbarPage("",id="mainpage",
                tabPanel("Introduction",value="page1",
                         # Application title
-                        titlePanel("Modeling the spread of Chronic Wasting Disease in mule deer"),
+                        titlePanel("Modeling Disease in a Natural Population"),
                         br(),
-                        p("In this tutorial, we're going to use a simple model, known as an SI model, to track the spread of Chronic Wasting Disease (CWD) in Albertan mule deer over time. We’ll then use the same model to look at how culling of individuals susceptible to the disease could be used eliminate CWD from our Albertan mule deer population."),
+                        p("In this tutorial we're going to use a simple mathematical model, known as an susceptible-infected (SI) model (Diekmann & Heesterbeek, 2000), to track the spread of Chronic Wasting Disease (CWD) in Albertan mule deer over time. We’ll then use the same model to look at how vaccination of individuals susceptible to the disease could be used to eliminate CWD from our Albertan mule deer population."),
                         withMathJax(),
                         h3("Learning Objectives"),
                         tags$ol(
-                            tags$li("Become familiar with the components of a simple SI model, and how they can be applied to predict the spread of a disease through time."),
-                            tags$li("Understand the role of \\(R_0\\) in determining the spread of a disease."),
-                            tags$li("Learn how strategies such as culling can be used with knowledge of \\(R_0\\) to prevent the spread of a disease.")
+                            tags$li("Become familiar with the components of a simple SI (susceptible-infected) model, and how they can be applied to predict the spread of a disease through time."),
+                            tags$li("Understand the role of \\(R_0\\), a measure of innate disease infectivity, in determining the spread of a disease."),
+                            tags$li("Learn how strategies such as vaccination can be used with knowledge of \\(R_0\\) to prevent the spread of a disease.")
                         ),
                         hr(),
                         h3("What is CWD?"),
                         p("CWD is a prion disease that affects deer, elk, reindeer, and moose. It has a long incubation period (typically 18-24 months), and symptoms include excessive salivation, increased drinking and urination, weight loss, confusion, and tremors. There is no recovery and no treatment, so eventual death is certain (mean time from oral infection to death is ~23 months).
-                          Below is a picture of our host of interest, the mule deer (", tags$a(href="https://www.rmef.org/wp-content/uploads/2020/09/CO-Mule-deer-buck.jpg","image source"), ")."),
+                          However, a vaccination is being developed by researchers from the University of Calgary (Abdelaziz et al., 2018). Below is a picture of our host of interest, the mule deer (", tags$a(href="https://www.rmef.org/wp-content/uploads/2020/09/CO-Mule-deer-buck.jpg","image source"), ")."),
                         br(),
                         tags$img(src="CWDMuleDeer.jpg",height= "40%", width="40%",style="display: block; margin-left: auto; margin-right: auto;"),
                         br(),
@@ -60,7 +60,7 @@ ui <- fluidPage(
                         br(),
                         tags$img(src="SI.jpg",height="25%",width="25%",style="display: block; margin-left: auto; margin-right: auto;"),
                         br(),
-                        HTML(paste("We will use a basic compartmental model, known as an SI model, to track the ", tags$strong("prevalence "),"of CWD in mule deer over time. We assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: ", tags$strong("\\(S\\) (susceptible) "), "and ", tags$strong("\\(I\\) (infected)"), ". The birth and death rates are exactly equal in the two groups, so we can say that the population is at ", tags$strong("equilibrium."),  sep="")),
+                        HTML(paste("We will use the susceptible-infected (SI) model to track the ", tags$strong("prevalence "),"of CWD in mule deer over time. We assume that the mule deer population consists of \\(N\\) individuals that are split into two groups: ", tags$strong("\\(S\\) (susceptible) "), "and ", tags$strong("\\(I\\) (infected)"), ". For now, we will assume the birth and death rates are exactly equal in the two groups, so we can say that the population is at ", tags$strong("equilibrium."),  sep="")),
                         br(),
                         br(),
                         HTML(paste(tags$strong("Prevalence: "), "The proportion of infected individuals in a population.", sep="")),
@@ -72,7 +72,7 @@ ui <- fluidPage(
                         HTML(paste(tags$strong("Equilibrium (of a population): "), "A population with equal birth and death rates, such that the number of individuals remains constant through time", sep="")),
                         br(),
                         hr(),
-                        HTML(paste("In this tutorial, we are going to look at 3 factors that could influence the spread of CWD over time: the ", tags$strong("transmission rate (\\(\\beta\\)), "), "the ", tags$strong("excess death rate of infected individuals (\\(\\gamma\\))"), ", and the effects of ", tags$strong("culling susceptible individuals (c). "), sep="")),
+                        HTML(paste("In this tutorial, we are going to look at 3 factors that could influence the spread of CWD over time: the ", tags$strong("transmission rate (\\(\\beta\\)), "), "the ", tags$strong("excess death rate of infected individuals (\\(\\gamma\\))"), ", and the effects of ", tags$strong("vaccinating susceptible individuals (c). "), sep="")),
                         br(),
                         HTML(paste("Click the 'next page' button to explore what happens when we allow susceptible individuals to become infected - in other words, when we allow transmission of the disease.")),
                         br(),
@@ -161,7 +161,7 @@ ui <- fluidPage(
                                 helpText("The slider above controls \\(\\beta\\), which is the transmission parameter"),
                                 hr(),
                                 sliderInput("gamma_gamma_parameter","\\(\\gamma\\)",min=0,max=3,step=0.001,value=0),
-                                helpText("the slider above controls \\(\\gamma\\), which is the excess death parameter"),
+                                helpText("The slider above controls \\(\\gamma\\), which is the excess death parameter"),
                                 hr(),
                                 span(textOutput("final_pop1"),style="font-size:large")
                             ),
@@ -193,25 +193,25 @@ ui <- fluidPage(
                         br(),
                         
                ),
-               tabPanel("Culling",value="page5",
-                        titlePanel("Culling and vaccination (the \\(c\\) parameter)"),
+               tabPanel("Vaccination",value="page5",
+                        titlePanel("Vaccination (the \\(c\\) parameter)"),
                         br(),
                         tags$img(src="ModelWithCull.jpg",height="40%",width="40%",style="display: block; margin-left: auto; margin-right: auto;"),
                         withMathJax(),
                         br(),
                         br(),
-                        h3("Would initiating culls of susceptibles help to fight CWD in mule deer?"),
+                        h3("How would vaccinating susceptibles help to fight CWD in mule deer?"),
                         p("In order to answer this question, we need to introduce the concept of \\(R_0\\) (pronounced",tags$em("r-naught"),")."),
                         hr(),
                         h3("What is \\(R_0\\)?"),
                         helpText("The rate of spread of CWD increases with the transmission rate \\(\\beta\\), but decreases with the infectious death rate \\(\\gamma\\) because we assume that individuals can only spread the disease while they're still alive. In fact, we can calculate the number of new infections that a single infected individual produces in a new population of all susceptible individuals as $$R_0=\\frac{\\beta}{\\gamma}$$ When \\(R_0 > 1\\), a typical infected individual will infect more than one susceptible individual and the disease spreads. However, if \\(R_0 < 1\\), infected individuals cannot replace themselves and CWD will not spread in the new population."),
                         br(),
                         tags$div(
-                            HTML(paste(tags$strong("KEY POINT :"), "Culling changes this prediction. By culling a proportion of the susceptible population equal to \\(c\\), we reduce the number of susceptible individuals to a fraction, \\((1-c)\\), of their number before the culls. These culls effectively reduce the contact rate among individuals, so that the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). With culling, the average number of new infections from a single infected individual becomes $$(1-c) \\cdot \\frac{\\beta}{\\gamma}$$"), sep = "")),
-                        p("In our simple model, this is is also equivalent to vaccinating a proportion of the susceptible population equal to \\(c\\) with a vaccine that perfectly prevents infection."),
+                            HTML(paste(tags$strong("KEY POINT :"), "Vaccination changes this prediction. By vaccinating a proportion of the susceptible population equal to \\(c\\), we reduce the number of susceptible individuals to a fraction, \\((1-c)\\), of their number before the culls. These vaccinations effectively reduce the contact rate between infected and susceptible individuals, as infected are more likely to come into contact with individuals vaccinated against disease spread, so the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). 
+                                       With vaccinations, the average number of new infections from a single infected individual becomes $$(1-c) \\cdot \\frac{\\beta}{\\gamma}$$"), sep = "")),
                         hr(),
-                        p("Try exploring how culling different proportions of the susceptible population (\\(c\\)) changes how the disease spreads. In the sidebar, we have also included a calculation of \\(R_0\\), 
-                          which is an intrinsic property of the disease and only depends on \\(\\beta\\) and \\(\\gamma\\) (i.e., \\(R_0\\) is not itself changed by culling). We have also included the population size after 100 years (scaled to the original population size) 
+                        p("Try exploring how vaccinating different proportions of the susceptible population (\\(c\\)) changes how the disease spreads. In the sidebar, we have also included a calculation of \\(R_0\\), 
+                          which is an intrinsic property of the disease and only depends on \\(\\beta\\) and \\(\\gamma\\) (i.e., \\(R_0\\) is not itself changed by vaccination). We have also included the population size after 100 years (scaled to the original population size) 
                           in order to illustrate the long-term dynamics of the disease."),
                         tags$div(
                             HTML(paste("As a reminder, the ", tags$strong(" black dots"), " are our real data, the " , tags$span(style="color:red", "red line "), "is our model prediction for prevalence, the ",  tags$span(style="color:blue", "blue line "), "is our prediction for the number of susceptible individuals, and the ", tags$strong("black dashed line"), " is our prediction for the total number of individuals, all relative to the size of the population before it was infected by CWD.", sep = ""))
@@ -220,13 +220,13 @@ ui <- fluidPage(
                         sidebarLayout(
                             sidebarPanel(
                                 sliderInput("c_beta_parameter","\\(\\beta\\)",min=0,max=2,step=0.001,value=0),
-                                p("the slider above controls \\(\\beta\\), which is the transmission parameter"),
+                                p("The slider above controls \\(\\beta\\), which is the transmission parameter"),
                                 hr(),
                                 sliderInput("c_gamma_parameter","\\(\\gamma\\)",min=0,max=3,step=0.001,value=0),
-                                p("the slider above controls \\(\\gamma\\), which is the death parameter"),
+                                p("The slider above controls \\(\\gamma\\), which is the death parameter"),
                                 hr(),
                                 sliderInput("c_c_parameter","\\(c\\)",min=0,max=1,step=0.001,value=0),
-                                p("the slider above controls \\(c\\), which is the culling parameter"),
+                                p("The slider above controls \\(c\\), which is the vaccination parameter"),
                                 hr(),
                                 span(uiOutput("R0"),style="font-size:large"),
                                 hr(),
@@ -242,8 +242,7 @@ ui <- fluidPage(
                             column(width=8,
                                    h3("Think about..."),
                                    tags$ol(
-                                       tags$li("If we have a new population of only susceptibles, what proportion do we need to cull to prevent CWD from spreading in the population, from a single infected individual? Why is this the case?"),
-                                       tags$li("How does culling susceptible individuals change the relative proportions of susceptible and infected individuals? What about the (scaled) population size?"),
+                                       tags$li("If we have a new population of only susceptibles, what proportion do we need to vaccinate to prevent CWD from spreading in the population, from a single infected individual? Why is this the case?"),
                                    ),
                             ),
                             column(width=4,align="center",
@@ -257,10 +256,11 @@ ui <- fluidPage(
                         br()
                ),
                tabPanel("Summary and references",value="page6",
-                        titlePanel("Summary"),
+                        titlePanel("Summary and Review"),
                         p("In this tutorial, we have seen how a simple", tags$strong("SI (Susceptible and Infected)"), "compartmental model can be used to predict disease spread."),
                         tags$ul(
                             tags$li("By increasing the", tags$strong("rate at which individuals interact"), "(\\(\\beta\\)) the disease spreads faster through the population."),
+                            tags$li("By increasing the", tags$strong("death rate of infected individuals"), "(\\(\\gamma\\)) the disease spreads slower, but in our simple model may cause the population to go extinct"),
                             tags$li("If infected individuals die faster than susceptible individuals, two possile scenarios can occur:",
                                     tags$ul(
                                         tags$li("If", tags$strong("\\(\\gamma\\) < \\(\\beta\\)"), "then", tags$strong("the population will go extinct"), "as each infected individual will infect more than one susceptible individual before it dies."),
@@ -270,18 +270,26 @@ ui <- fluidPage(
                             br(),
                             tags$li("We call the average number of infections caused by one infected individual",tags$strong("\\(R_0\\)"), ". 
                                     More specifically, this number is the average number of infections cause by a single individual in a disease-free population."),
-                            tags$li("By ", tags$strong("culling or vaccinating"), "a portion of the susceptible population, we can reduce the average number of infections produced by an infected individual to below 1, which results in elimination of the disease. 
-                                    In our model, a fraction of the susceptible population more than \\(1-1/R_0\\) must be culled or vaccinated to eliminate the disease.")
+                            tags$li("By ", tags$strong("vaccinating "), "a portion of the susceptible population, we can reduce the average number of infections produced by an infected individual to below 1, which results in elimination of the disease. 
+                                    In our model, a fraction of the susceptible population more than \\(1-1/R_0\\) must be vaccinated to eliminate the disease.")
                         ),
                         p("It is important to note that this is a simple model of a potentially complex system, and does not necessarily reflect how the disease will progress through the population.
                            For example, it may be the case that when the population size decreases from excess deaths by the disease, more resources are available to the surviving deer, thus increasing their birth rates.
-                           Under certain circumstances, this can lead to a smaller stable equilibrium population size instead of complete population extinction. Additionally, this model is deterministic, meaning that random differences
+                           Under certain circumstances, this can lead to a smaller stable equilibrium population size instead of complete population extinction. 
+                           We also assume that the spread is frequency dependent, meaning the rate of new infections is proportional to the proportion of infected individuals, not the absolute number. Evidence suggests this 
+                           is the primary mode of transmission for CWD, but other modes may play a role (Gross & Miller, 2000; Jennelle et al., 2014). Additionally, this model is deterministic, meaning that random differences
                            in the number of infections between individuals are not considered. Especially in small population sizes, this can be an important consideration for predicting the course of a disease."),
                         hr(),
                         p(tags$strong("Data Sources")),
                         p("The number of infected mule deer in Alberta was compiled from the following two sources:"),
                         p("Government of Alberta. (n.d.). Chronic wasting disease – history in Alberta. Alberta.ca. Retrieved May 27, 2022, from https://www.alberta.ca/chronic-wasting-disease-history-in-alberta.aspx "),
-                        p("Potapov, A., Merrill, E., Pybus, M., & Lewis, M. A. (2015). Empirical Estimation of R 0 for Unknown Transmission Functions: The Case of Chronic Wasting Disease in Alberta. Plos one, 10(10), e0140024.")
+                        p("Potapov, A., Merrill, E., Pybus, M., & Lewis, M. A. (2015). Empirical Estimation of R 0 for Unknown Transmission Functions: The Case of Chronic Wasting Disease in Alberta. Plos one, 10(10), e0140024."),
+                        p(tags$strong("Other references:")),
+                        p("Abdelaziz, D. H., Thapa, S., Brandon, J., Maybee, J., Vankuppeveld, L., McCorkell, R., & Schätzl, H. M. (2018). Recombinant prion protein vaccination of transgenic elk PrP mice and reindeer overcomes self-tolerance and protects mice against chronic wasting disease. Journal of Biological Chemistry, 293(51), 19812-19822."),
+                        p("Diekmann, O., & Heesterbeek, J. A. P. (2000). Mathematical epidemiology of infectious diseases: model building, analysis and interpretation (Vol. 5). John Wiley & Sons."),
+                        p("Gross JE, Miller MW. Chronic wasting disease in mule deer: Disease dynamics and control. The Journal of Wildlife Management. 2001;65(2):205–215."),
+                        p(" Jennelle CS, Henaux V, Wasserberg G, Thiagarajan B, Rolley RE, Samuel MD. Transmission of chronic wasting disease in Wisconsin white-tailed deer: implications for disease spread and management. PLOS ONE. 2014 Mar;9(3):e91043.")
+                        
                         
                    
                )
