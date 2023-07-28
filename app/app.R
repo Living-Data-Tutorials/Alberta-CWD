@@ -207,7 +207,7 @@ ui <- fluidPage(
                         helpText("The rate of spread of CWD increases with the transmission rate \\(\\beta\\), but decreases with the infectious death rate \\(\\gamma\\) because we assume that individuals can only spread the disease while they're still alive. In fact, we can calculate the number of new infections that a single infected individual produces in a new population of all susceptible individuals as $$R_0=\\frac{\\beta}{\\gamma}$$ When \\(R_0 > 1\\), a typical infected individual will infect more than one susceptible individual and the disease spreads. However, if \\(R_0 < 1\\), infected individuals cannot replace themselves and CWD will not spread in the new population."),
                         br(),
                         tags$div(
-                            HTML(paste(tags$strong("KEY POINT :"), "Vaccination changes this prediction. By vaccinating a proportion of the susceptible population equal to \\(c\\), we reduce the number of susceptible individuals to a fraction, \\((1-c)\\), of their number before the culls. These vaccinations effectively reduce the contact rate between infected and susceptible individuals, as infected are more likely to come into contact with individuals vaccinated against disease spread, so the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). 
+                            HTML(paste(tags$strong("KEY POINT :"), "Vaccination changes this prediction. By vaccinating a proportion of the susceptible population equal to \\(c\\), we reduce the number of susceptible individuals to a fraction, \\((1-c)\\), of their number before the vaccination. These vaccinations effectively reduce the contact rate between infected and susceptible individuals, as infected are more likely to come into contact with individuals vaccinated against disease spread, so the transmission rate is scaled to \\((1-c) \\cdot \\beta\\). 
                                        With vaccinations, the average number of new infections from a single infected individual becomes $$(1-c) \\cdot \\frac{\\beta}{\\gamma}$$"), sep = "")),
                         hr(),
                         p("Try exploring how vaccinating different proportions of the susceptible population (\\(c\\)) changes how the disease spreads. In the sidebar, we have also included a calculation of \\(R_0\\), 
@@ -269,7 +269,7 @@ ui <- fluidPage(
                                     ),
                             br(),
                             tags$li("We call the average number of infections caused by one infected individual",tags$strong("\\(R_0\\)"), ". 
-                                    More specifically, this number is the average number of infections cause by a single individual in a disease-free population."),
+                                    More specifically, this number is the average number of infections caused by a single individual in a disease-free population."),
                             tags$li("By ", tags$strong("vaccinating "), "a portion of the susceptible population, we can reduce the average number of infections produced by an infected individual to below 1, which results in elimination of the disease. 
                                     In our model, a fraction of the susceptible population more than \\(1-1/R_0\\) must be vaccinated to eliminate the disease.")
                         ),
